@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trang quản trị sinh viên</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+  }
+  .container {
+    width: 80%;
+    margin: 50px auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  th, td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+  input[type="text"],
+  input[type="number"] {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Danh sách sinh viên</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Tên</th>
+        <th>Tuổi</th>
+        <th>Địa chỉ</th>
+        <th>Số điện thoại</th>
+        <th>Email</th>
+        <th>Lớp học</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody id="student-table">
+      <!-- Dữ liệu sinh viên sẽ được thêm vào đây -->
+    </tbody>
+  </table>
+
+  <h2>Thêm sinh viên mới</h2>
+  <form id="add-student-form" onsubmit="return addStudent()">
+    <input type="text" id="name" placeholder="Tên" required><br>
+    <input type="number" id="age" placeholder="Tuổi" required><br>
+    <input type="text" id="address" placeholder="Địa chỉ" required><br>
+    <input type="text" id="phone" placeholder="Số điện thoại" required><br>
+    <input type="text" id="email" placeholder="Email" required><br>
+    <input type="text" id="class" placeholder="Lớp học" required><br>
+    <input type="submit" value="Thêm mới">
+  </form>
+</div>
+
+<script>
+// Mảng chứa thông tin sinh viên
+var students = [];
+
+// Hàm thêm sinh viên mới
+function addStudent() {
+  var name = document.getElementById("name").value;
+  var age = document.getElementById("age").value;
+  var address = document.getElementById("address").value;
+  var phone = document.getElementById("phone").value;
+  var email = document.getElementById("email").value;
+  var classRoom = document.getElementById("class").value;
+  
+  // Tạo một object mới đại diện cho sinh viên
+  var student = {
+    name: name,
+    age: age,
+    address: address,
+    phone: phone,
+    email: email,
+    class: classRoom
+  };
+
+  // Thêm sinh viên vào mảng
+  students.push(student);
+
+  // Hiển thị lại bảng sinh viên
+  displayStudents();
+
+  // Reset form
+  document.getElementById("add-student-form").reset();
+
+  return false; // Ngăn form submit
+}
+
+// Hàm hiển thị danh sách sinh viên
+function displayStudents() {
+  var tableBody = document.getElementById("student-table");
+  tableBody.innerHTML = ""; // Xóa bảng sinh viên hiện tại
+
+  // Duyệt qua mảng sinh viên và thêm vào bảng
+  for (var i = 0; i < students.length; i++) {
+    var student = students[i];
+    var row = "<tr><td>" + (i + 1) + "</td><td>" + student.name + "</td><td>" + student.age + "</td><td>" + student.address + "</td><td>" + student.phone + "</td><td>" + student.email + "</td><td>" + student.class + "</td><td><button onclick='deleteStudent(" + i + ")'>Xóa</button></td></tr>";
+    tableBody.innerHTML += row;
+  }
+}
+
+// Hàm xóa sinh viên
+function deleteStudent(index) {
+  students.splice(index, 1); // Xóa sinh viên khỏi mảng
+  displayStudents(); // Hiển thị lại bảng sinh viên
+}
+</script>
+
+</body>
+</html>
